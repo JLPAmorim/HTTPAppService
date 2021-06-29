@@ -6,8 +6,21 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 
+router.get('/register',(req, res) => {
+  res.render('register-form')
+})
+
 router.get('/login', function(req, res) {
   res.render('login-form');
+});
+
+router.post('/register', function(req, res) {
+  axios.post('http://auth:8002/users/register', req.body)
+    .then(dados => {
+      console.log(dados)
+      res.redirect('/login')
+    })
+    .catch(e => res.render('error', {error: e}))
 });
 
 router.post('/login', function(req, res) {
